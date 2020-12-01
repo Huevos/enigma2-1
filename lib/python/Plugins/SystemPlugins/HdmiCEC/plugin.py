@@ -36,6 +36,9 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 		ConfigListScreen.__init__(self, self.list, session = self.session)
 		self.createSetup()
 		self.updateAddress()
+		
+		if not self.updateDescription in self["config"].onSelectionChanged:
+			self["config"].onSelectionChanged.append(self.updateDescription)
 
 	def createSetup(self):
 		self.list = []
@@ -67,10 +70,6 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 		self["config"].l.setList(self.list)
 
 	# for summary:
-	def getCurrentEntry(self):
-		self.updateDescription()
-		return ConfigListScreen.getCurrentEntry(self)
-
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
 		return SetupSummary
